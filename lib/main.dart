@@ -10,6 +10,7 @@ class MySimpleLogin extends StatefulWidget {
 }
 
 class _MySimpleLoginState extends State<MySimpleLogin> {
+  final _formKey = GlobalKey<FormState>();
   var email = "";
   var password = "";
 
@@ -19,65 +20,90 @@ class _MySimpleLoginState extends State<MySimpleLogin> {
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Domine'),
       title: "My ITK Dude",
       home: Scaffold(
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 40),
-                  child: Image.asset(
-                    'assets/images/lambang_itk.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
-                  ),
-                  child: const Text(
-                    "Login",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                      fontFamily: 'Headline',
+        body: Form(
+          key: _formKey,
+          // autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Center(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 40),
+                    child: Image.asset(
+                      'assets/images/lambang_itk.png',
+                      width: 150,
+                      height: 150,
                     ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.all(20),
-                  width: double.infinity,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Email",
-                      prefixIcon: Icon(Icons.email),
-                      border: OutlineInputBorder(),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
                     ),
-                    onChanged: (value) => setState(() => email = value),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 12,
-                    horizontal: 20,
-                  ),
-                  width: double.infinity,
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      labelText: "Password",
-                      prefixIcon: Icon(Icons.password),
-                      border: OutlineInputBorder(),
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                        fontFamily: 'Headline',
+                      ),
                     ),
-                    onChanged: (value) => setState(() => password = value),
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
                   ),
-                ),
-                Container(
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    width: double.infinity,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Email",
+                        prefixIcon: Icon(Icons.email),
+                        border: OutlineInputBorder(),
+                        // errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepOrange)),
+                        // focusedErrorBorder:  OutlineInputBorder(borderSide: BorderSide(color: Colors.deepOrange)),
+                        // errorStyle: TextStyle(color: Colors.deepOrange)
+                      ),
+                      validator: (value) {
+                        const pattern =
+                            r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)';
+                        final regExp = RegExp(pattern);
+
+                        if (value == null) {
+                          return 'Enter an email';
+                        } else if (!regExp.hasMatch(value)) {
+                          return 'Enter a valid email';
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) => setState(() => email = value),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 12,
+                      horizontal: 20,
+                    ),
+                    width: double.infinity,
+                    child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: "Password",
+                        prefixIcon: Icon(Icons.password),
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) => setState(() => password = value),
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
+                    ),
+                  ),
+                  Container(
                     height: 55,
                     width: double.infinity,
                     margin: const EdgeInsets.symmetric(
@@ -92,20 +118,10 @@ class _MySimpleLoginState extends State<MySimpleLogin> {
                         ),
                         onPressed: () {
                           FocusScope.of(context).unfocus();
-                          if (email.isEmpty || password.isEmpty) {
-                            const message = 'Input Data Please';
-                            const snackBar = SnackBar(
-                              content: Text(
-                                message,
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              backgroundColor: Colors.red,
-                            );
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(snackBar);
-                          } else {
+                          var isValid = _formKey.currentState!.validate();
+                          if (isValid) {
                             final message =
-                                'Email: $email\nPassword: $password';
+                                'Login Success\nEmail: $email\nPassword: $password';
                             final snackBar = SnackBar(
                               content: Text(
                                 message,
@@ -122,8 +138,10 @@ class _MySimpleLoginState extends State<MySimpleLogin> {
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
-                    )),
-              ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
