@@ -57,17 +57,22 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/images/itk_logo.png
-    - assets/images/lambang_itk.png
+    - assets/images/logo_itk.png
   fonts:
-    - family: Domine
+    - family: OpenSans
       fonts:
-        - asset: fonts/Domine-Bold.ttf
+        - asset: assets/fonts/OpenSans-Italic.ttf
+          style: italic
+        - asset: assets/fonts/OpenSans-Regular.ttf
+          style: normal
+        - asset: assets/fonts/OpenSans-Light.ttf
+          weight: 100
+        - asset: assets/fonts/OpenSans-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/OpenSans-SemiBold.ttf
+          weight: 500
+        - asset: assets/fonts/OpenSans-Bold.ttf
           weight: 700
-        - asset: fonts/Domine-Regular.ttf
-    - family: Headline
-      fonts:
-        - asset: fonts/Headline-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
