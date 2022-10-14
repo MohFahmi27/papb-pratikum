@@ -59,9 +59,6 @@ class _MySimpleLoginState extends State<MySimpleLogin> {
                         labelText: "Email",
                         prefixIcon: Icon(Icons.email),
                         border: OutlineInputBorder(),
-                        // errorBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.deepOrange)),
-                        // focusedErrorBorder:  OutlineInputBorder(borderSide: BorderSide(color: Colors.deepOrange)),
-                        // errorStyle: TextStyle(color: Colors.deepOrange)
                       ),
                       validator: (value) {
                         const pattern =
