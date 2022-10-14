@@ -6,6 +6,7 @@ import 'package:papb/widgets/logo_widget.dart';
 import 'package:papb/widgets/password_widget.dart';
 import 'package:papb/widgets/title_widget.dart';
 
+import '../../constants/app_routes.dart';
 import '../../widgets/button_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -77,18 +78,10 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigateToHomeScreen(BuildContext context) {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const HomeScreen(),
-      ),
-    );
+    Navigator.pushReplacementNamed(context, AppRoutes.home);
   }
 
   void navigateToRegister(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const RegisterScreen(),
-      ),
-    );
+    Navigator.pushNamed(context, AppRoutes.register);
   }
 }
