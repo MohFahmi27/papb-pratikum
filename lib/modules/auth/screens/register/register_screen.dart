@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:papb/widgets/email_widget.dart';
-import 'package:papb/widgets/logo_widget.dart';
-import 'package:papb/widgets/password_widget.dart';
+import 'package:papb/modules/auth/widgets/email_widget.dart';
+import 'package:papb/modules/auth/widgets/password_widget.dart';
 
-import '../../widgets/button_widget.dart';
+import '../../../../common/button_widget.dart';
+import '../../../../common/logo_widget.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);

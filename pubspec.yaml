@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   # store key & value
   shared_preferences: ^2.0.15
+  # bottom navigation custom
+  salomon_bottom_bar: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -60,20 +62,15 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/logo_itk.png
+    - assets/images/profile.jpeg
   fonts:
     - family: OpenSans
       fonts:
-        - asset: assets/fonts/OpenSans-Italic.ttf
-          style: italic
-        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/Comfortaa-Regular.ttf
           style: normal
-        - asset: assets/fonts/OpenSans-Light.ttf
-          weight: 100
-        - asset: assets/fonts/OpenSans-Medium.ttf
+        - asset: assets/fonts/Comfortaa-SemiBold.ttf
           weight: 400
-        - asset: assets/fonts/OpenSans-SemiBold.ttf
-          weight: 500
-        - asset: assets/fonts/OpenSans-Bold.ttf
+        - asset: assets/fonts/Comfortaa-Bold.ttf
           weight: 700
 
   # To add assets to your application, add an assets section, like this:

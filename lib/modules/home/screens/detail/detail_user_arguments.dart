@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 class DetailUserArguments {
   final String userName;
-  final int idUser;
+  final String idUser;
 
   const DetailUserArguments(this.userName, this.idUser);
 }

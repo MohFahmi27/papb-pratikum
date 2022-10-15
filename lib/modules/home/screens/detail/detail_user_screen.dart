@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:papb/screens/detail/detail_user_arguments.dart';
+
+import 'detail_user_arguments.dart';
 
 class DetailUserScreen extends StatelessWidget {
   final DetailUserArguments args;
@@ -13,7 +14,7 @@ class DetailUserScreen extends StatelessWidget {
         foregroundColor: Colors.black,
         elevation: 0,
         title: const Text(
-          "Register",
+          "Detail",
         ),
         centerTitle: true,
       ),

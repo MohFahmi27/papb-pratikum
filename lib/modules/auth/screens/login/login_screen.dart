@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:papb/utils/services/local_storage_service.dart';
-import 'package:papb/widgets/email_widget.dart';
-import 'package:papb/widgets/logo_widget.dart';
-import 'package:papb/widgets/password_widget.dart';
+import 'package:papb/modules/auth/widgets/email_widget.dart';
+import 'package:papb/modules/auth/widgets/password_widget.dart';
 
-import '../../constants/app_routes.dart';
-import '../../widgets/button_widget.dart';
+import '../../../../common/button_widget.dart';
+import '../../../../common/logo_widget.dart';
+import '../../../../constants/app_routes.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

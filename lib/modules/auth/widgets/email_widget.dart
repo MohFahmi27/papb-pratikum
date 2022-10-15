@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/helpers/validator_helpers.dart';
+import '../../../utils/helpers/validator_helpers.dart';
 
 class EmailWidget extends StatelessWidget {
   final Function(String?) onChanged;

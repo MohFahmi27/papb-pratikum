@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:papb/screens/detail/detail_user_arguments.dart';
-import 'package:papb/screens/detail/detail_user_screen.dart';
-import 'package:papb/screens/home/home_screen.dart';
-import 'package:papb/screens/login/login_screen.dart';
-import 'package:papb/screens/register/register_screen.dart';
+import 'package:papb/modules/home/screens/home_screen.dart';
 import 'package:papb/utils/services/local_storage_service.dart';
 
 import 'constants/app_routes.dart';
+import 'modules/auth/screens/login/login_screen.dart';
+import 'modules/auth/screens/register/register_screen.dart';
+import 'modules/home/screens/detail/detail_user_arguments.dart';
+import 'modules/home/screens/detail/detail_user_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
