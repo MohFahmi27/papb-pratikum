@@ -6,7 +6,7 @@ class LogoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 40),
+      margin: const EdgeInsets.only(bottom: 28),
       child: Image.asset(
         'assets/images/logo_itk.png',
         width: 150,

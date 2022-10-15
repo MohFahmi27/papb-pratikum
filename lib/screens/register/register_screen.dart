@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:papb/widgets/email_widget.dart';
 import 'package:papb/widgets/logo_widget.dart';
 import 'package:papb/widgets/password_widget.dart';
-import 'package:papb/widgets/title_widget.dart';
 
 import '../../widgets/button_widget.dart';
-import '../login/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -22,6 +20,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        title: const Text(
+          "Register",
+        ),
+        centerTitle: true,
+    ),
       body: Form(
         key: _formKey,
         child: Center(
@@ -30,7 +37,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const LogoWidget(),
-                const TitleWidget("Register"),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 24),
+                  child: Column(
+                    children: const [
+                      Text(
+                        "Daftar",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                      ),
+                      Text(
+                        "Silahkan Register mendapatkan akun dll",
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 EmailWidget((value) => _email = value.toString()),
                 PasswordWidget((value) => _password = value.toString()),
                 ButtonWidget(

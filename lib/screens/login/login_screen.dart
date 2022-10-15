@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:papb/screens/home/home_screen.dart';
-import 'package:papb/screens/register/register_screen.dart';
+import 'package:papb/utils/services/local_storage_service.dart';
 import 'package:papb/widgets/email_widget.dart';
 import 'package:papb/widgets/logo_widget.dart';
 import 'package:papb/widgets/password_widget.dart';
-import 'package:papb/widgets/title_widget.dart';
 
 import '../../constants/app_routes.dart';
 import '../../widgets/button_widget.dart';
@@ -32,9 +30,31 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const LogoWidget(),
-                const TitleWidget("Login"),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 24),
+                  child: Column(
+                    children: const [
+                      Text(
+                        "Welcome",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25,
+                        ),
+                      ),
+                      Text(
+                        "Masuk untuk dapat mengakses informasi dll",
+                        style: TextStyle(
+                          color: Colors.grey,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 EmailWidget((value) => _email = value.toString()),
                 PasswordWidget((value) => _password = value.toString()),
+                const SizedBox(
+                  height: 18,
+                ),
                 loginButton(),
                 loginRegister(),
               ],
@@ -46,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget loginButton() => Builder(
-        builder: (context) => ButtonWidget("Masuk", 8, () {
+        builder: (context) => ButtonWidget("Masuk", 0, () {
           FocusScope.of(context).unfocus();
           var isValid = _formKey.currentState!.validate();
           checkLoginStatus(context, isValid, _email, _password);
@@ -54,15 +74,36 @@ class _LoginScreenState extends State<LoginScreen> {
       );
 
   Widget loginRegister() => Builder(
-      builder: (context) => ButtonWidget(
-            "Register",
-            8,
-            () => navigateToRegister(context),
-          ));
+        builder: (context) => Container(
+          height: 55,
+          width: double.infinity,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 14,
+            vertical: 14,
+          ),
+          child: OutlinedButton(
+            style: OutlinedButton.styleFrom(
+              side: const BorderSide(color: Colors.indigo),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            onPressed: () => navigateToRegister(context),
+            child: const Text(
+              "Register",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+      );
 
   void checkLoginStatus(
       BuildContext context, bool isValid, String email, String password) {
     if (isValid && (email == "test@gmail.com") && (password == "test")) {
+      setLoginState();
       navigateToHomeScreen(context);
     } else {
       const message = "Credentials Wrong";
@@ -83,5 +124,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void navigateToRegister(BuildContext context) {
     Navigator.pushNamed(context, AppRoutes.register);
+  }
+
+  Future setLoginState() async {
+    LocalStorageService.setStateLogin(true);
   }
 }

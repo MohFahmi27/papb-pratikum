@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/helpers.dart';
+import '../utils/helpers/validator_helpers.dart';
 
 class EmailWidget extends StatelessWidget {
   final Function(String?) onChanged;
@@ -10,13 +10,15 @@ class EmailWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       child: TextFormField(
-        decoration: const InputDecoration(
-          labelText: "Email",
-          prefixIcon: Icon(Icons.email),
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          hintText: "Email",
+          prefixIcon: const Icon(Icons.email),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
         validator: (value) => emailValidator(value),
         onChanged: (value) => onChanged(value),

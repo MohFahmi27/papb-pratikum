@@ -4,10 +4,15 @@ import 'package:papb/screens/detail/detail_user_screen.dart';
 import 'package:papb/screens/home/home_screen.dart';
 import 'package:papb/screens/login/login_screen.dart';
 import 'package:papb/screens/register/register_screen.dart';
+import 'package:papb/utils/services/local_storage_service.dart';
 
 import 'constants/app_routes.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalStorageService.initializePreference();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -16,13 +21,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
         fontFamily: 'OpenSans',
       ),
       title: "My ITK",
-      initialRoute: AppRoutes.login,
+      debugShowCheckedModeBanner: false,
+      initialRoute: getInitialRoute(),
       onGenerateRoute: (settings) => configRoute(settings),
     );
+  }
+
+  String getInitialRoute() {
+    if (LocalStorageService.getStateLogin()) {
+      return AppRoutes.home;
+    } else {
+      return AppRoutes.login;
+    }
   }
 
   Route? configRoute(RouteSettings settings) {

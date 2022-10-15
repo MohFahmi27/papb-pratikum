@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/helpers.dart';
+import '../utils/helpers/validator_helpers.dart';
 
 class PasswordWidget extends StatelessWidget {
   final Function(String?) onChanged;
@@ -10,15 +10,17 @@ class PasswordWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(
-        vertical: 12,
+        vertical: 16,
         horizontal: 20,
       ),
       width: double.infinity,
       child: TextFormField(
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: "Password",
-          prefixIcon: Icon(Icons.password),
-          border: OutlineInputBorder(),
+          prefixIcon: const Icon(Icons.password),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
         ),
         validator: (value) => passwordValidator(value),
         onChanged: (value) => onChanged(value),
