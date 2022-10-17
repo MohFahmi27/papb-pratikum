@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:papb/modules/home/models/classmates.dart';
 
+import '../../../../utils/services/rest_api_service.dart';
+import '../../models/user.dart';
 import '../../widgets/class_mate_list_widget.dart';
 import '../../widgets/home_banner_widget.dart';
 
@@ -12,24 +13,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<ClassMates> classMatesData = <ClassMates>[
-    ClassMates("11182312", "Someone 1", "Informatika 2018",
-        "assets/images/profile.jpeg"),
-    ClassMates("11182332", "Someone 2", "Informatika 2018",
-        "assets/images/profile.jpeg"),
-    ClassMates("11182311", "Someone 3", "Informatika 2019",
-        "assets/images/profile.jpeg"),
-    ClassMates("11182355", "Someone 4", "Informatika 2020",
-        "assets/images/profile.jpeg"),
-    ClassMates("11182552", "Someone 5", "Informatika 2021",
-        "assets/images/profile.jpeg"),
-    ClassMates("11182511", "Someone 6", "Informatika 2022",
-        "assets/images/profile.jpeg"),
-    ClassMates("111825342", "Someone 7", "Informatika 2021",
-        "assets/images/profile.jpeg"),
-    ClassMates("111825667", "Someone 8", "Informatika 2022",
-        "assets/images/profile.jpeg"),
-  ];
+  late Future<List<Datum>> _usersData;
+
+  @override
+  void initState() {
+    _usersData = RestApiService.usersData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +30,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             margin: const EdgeInsets.only(
               top: 24,
+              bottom: 14,
               left: 20,
             ),
             width: double.infinity,
@@ -52,9 +43,22 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
-          ClassMateListWidget(classMatesData)
+          fetchUserData()
         ],
       ),
     );
   }
+
+  FutureBuilder<List<Datum>> fetchUserData() =>
+      FutureBuilder<List<Datum>>(
+        future: _usersData,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ClassMateListWidget(snapshot.data as List<Datum>);
+          } else if (snapshot.hasError) {
+            return Center(child: Text("${snapshot.error}"),);
+          }
+          return const CircularProgressIndicator();
+        },
+      );
 }

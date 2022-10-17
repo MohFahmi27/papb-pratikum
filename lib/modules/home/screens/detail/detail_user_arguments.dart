@@ -1,6 +1,11 @@
 class DetailUserArguments {
   final String userName;
-  final String idUser;
+  final String email;
+  final String avatarUrl;
 
-  const DetailUserArguments(this.userName, this.idUser);
+  const DetailUserArguments({
+    required this.userName,
+    required this.email,
+    required this.avatarUrl,
+  });
 }

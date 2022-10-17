@@ -4,6 +4,7 @@ import 'package:papb/modules/auth/widgets/password_widget.dart';
 
 import '../../../../common/button_widget.dart';
 import '../../../../common/logo_widget.dart';
+import '../../../../utils/services/rest_api_service.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -14,8 +15,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  var _email = "";
-  var _password = "";
+  final _email = TextEditingController();
+  final _password = TextEditingController();
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           "Register",
         ),
         centerTitle: true,
-    ),
+      ),
       body: Form(
         key: _formKey,
         child: Center(
@@ -40,34 +42,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 24),
                   child: Column(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Daftar",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),
                       ),
-                      Text(
-                        "Silahkan Register mendapatkan akun dll",
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Container(
+                        margin: const EdgeInsets.only(top: 8),
+                        child: const Text(
+                          "Silahkan Register mendapatkan akun dll",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       )
                     ],
                   ),
                 ),
-                EmailWidget((value) => _email = value.toString()),
-                PasswordWidget((value) => _password = value.toString()),
+                EmailWidget(_email),
+                PasswordWidget(_password),
                 ButtonWidget(
                   "Register",
                   24,
                   () {
                     FocusScope.of(context).unfocus();
                     var isValid = _formKey.currentState!.validate();
-                    checkRegisterStatus(context, isValid, _email, _password);
+                    checkRegisterStatus(context, isValid);
                   },
                 ),
+                if (_isLoading)
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      child: const CircularProgressIndicator(),
+                    ),
+                  )
               ],
             ),
           ),
@@ -76,20 +88,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  void checkRegisterStatus(
-      BuildContext context, bool isValid, String email, String password) {
-    if (isValid && (email == "test@gmail.com") && (password == "test")) {
-      _navigateToLoginScreen();
-    } else {
-      const message = "Register UnSuccessfully";
-      const snackBar = SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(fontSize: 20),
-        ),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  void checkRegisterStatus(BuildContext context, bool isValid) {
+    if (isValid) {
+      setState(() => _isLoading = true);
+      RestApiService.register(_email.text, _password.text).then((value) {
+        if (value.token!.isNotEmpty) {
+          _navigateToLoginScreen();
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              value.error ?? "Something Went Wrong",
+              style: const TextStyle(fontSize: 20),
+            ),
+            backgroundColor: Colors.red,
+          ));
+        }
+        setState(() => _isLoading = false);
+      });
     }
   }
 

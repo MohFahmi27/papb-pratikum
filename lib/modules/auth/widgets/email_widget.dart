@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../utils/helpers/validator_helpers.dart';
 
 class EmailWidget extends StatelessWidget {
-  final Function(String?) onChanged;
+  final TextEditingController controller;
 
-  const EmailWidget(this.onChanged, {Key? key}) : super(key: key);
+  const EmailWidget(this.controller, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class EmailWidget extends StatelessWidget {
           ),
         ),
         validator: (value) => emailValidator(value),
-        onChanged: (value) => onChanged(value),
+        controller: controller,
         keyboardType: TextInputType.emailAddress,
       ),
     );

@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:papb/utils/helpers/color_helper.dart';
 
-import '../../../constants/app_routes.dart';
-import '../screens/detail/detail_user_arguments.dart';
+class CoursesItemWidget extends StatelessWidget {
+  final String name;
+  final int year;
+  final String courseColor;
+  final String courseNumber;
 
-class ClassMatesItemWidget extends StatelessWidget {
-  final int id;
-  final String avatarUrl;
-  final String fullName;
-  final String email;
-
-  const ClassMatesItemWidget(this.id, this.avatarUrl, this.fullName, this.email,
+  const CoursesItemWidget(this.name, this.year, this.courseColor, this.courseNumber,
       {Key? key})
       : super(key: key);
 
@@ -29,15 +27,13 @@ class ClassMatesItemWidget extends StatelessWidget {
           vertical: 8,
         ),
         child: ListTile(
-          leading: SizedBox(
-            width: 65,
-            height: 70,
-            child: CircleAvatar(
-              foregroundImage: NetworkImage(avatarUrl),
-            ),
+          leading: Container(
+            width: 60,
+            height: 250,
+            color: courseColor.toColor(),
           ),
           title: Text(
-            fullName,
+            name.toUpperCase(),
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
@@ -46,21 +42,12 @@ class ClassMatesItemWidget extends StatelessWidget {
           subtitle: Container(
             margin: const EdgeInsets.only(top: 6),
             child: Text(
-              email,
+              "$year | $courseNumber",
               style: const TextStyle(
                 fontSize: 12,
               ),
             ),
           ),
-          trailing: const Icon(Icons.chevron_right_rounded),
-          onTap: () {
-            var args = DetailUserArguments(
-              userName: fullName,
-              email: email,
-              avatarUrl: avatarUrl,
-            );
-            Navigator.pushNamed(context, AppRoutes.detailUser, arguments: args);
-          },
         ),
       ),
     );

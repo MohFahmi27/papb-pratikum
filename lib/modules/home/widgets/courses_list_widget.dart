@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../models/user.dart';
-import 'class_mates_item_widget.dart';
+import '../models/courses.dart';
+import 'courses_item_widget.dart';
 
-class ClassMateListWidget extends StatelessWidget {
-  final List<Datum> usersData;
+class CoursesListWidget extends StatelessWidget {
+  final List<DataCourses> dataCourses;
 
-  const ClassMateListWidget(this.usersData, {Key? key}) : super(key: key);
+  const CoursesListWidget(this.dataCourses, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +18,15 @@ class ClassMateListWidget extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 16),
           child: ListView.builder(
             physics: const ScrollPhysics(parent: null),
-            itemCount: usersData.length,
+            itemCount: dataCourses.length,
             shrinkWrap: true,
             itemBuilder: (context, index) {
-              final data = usersData[index];
-              return ClassMatesItemWidget(
-                data.id ?? 0,
-                data.avatar ?? "",
-                "${data.firstName} ${data.lastName}",
-                data.email ?? "",
+              final data = dataCourses[index];
+              return CoursesItemWidget(
+                data.name,
+                data.year,
+                data.color,
+                data.pantoneValue,
               );
             },
           ),
@@ -35,3 +35,4 @@ class ClassMateListWidget extends StatelessWidget {
     );
   }
 }
+
