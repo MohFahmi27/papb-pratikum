@@ -40,6 +40,15 @@ dependencies:
   salomon_bottom_bar: ^3.3.1
   # for api integration
   http: ^0.13.5
+  #for app icon
+  flutter_launcher_icons: ^0.10.0
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: 'assets/images/logo.png'
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: 'assets/images/logo.png'
 
 dev_dependencies:
   flutter_test:
