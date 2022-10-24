@@ -34,6 +34,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  # store key & value
+  shared_preferences: ^2.0.15
+  # bottom navigation custom
+  salomon_bottom_bar: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -57,17 +61,17 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/images/itk_logo.png
-    - assets/images/lambang_itk.png
+    - assets/images/logo_itk.png
+    - assets/images/profile.jpeg
   fonts:
-    - family: Domine
+    - family: OpenSans
       fonts:
-        - asset: fonts/Domine-Bold.ttf
+        - asset: assets/fonts/Comfortaa-Regular.ttf
+          style: normal
+        - asset: assets/fonts/Comfortaa-SemiBold.ttf
+          weight: 400
+        - asset: assets/fonts/Comfortaa-Bold.ttf
           weight: 700
-        - asset: fonts/Domine-Regular.ttf
-    - family: Headline
-      fonts:
-        - asset: fonts/Headline-Regular.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
