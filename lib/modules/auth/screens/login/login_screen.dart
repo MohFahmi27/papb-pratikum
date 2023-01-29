@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:papb/utils/services/local_storage_service.dart';
 import 'package:papb/modules/auth/widgets/email_widget.dart';
 import 'package:papb/modules/auth/widgets/password_widget.dart';
+import 'package:papb/utils/services/local_storage_service.dart';
+import 'package:papb/utils/services/rest_api_service.dart';
 
 import '../../../../common/button_widget.dart';
 import '../../../../common/logo_widget.dart';
@@ -16,8 +17,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  var _email = "";
-  var _password = "";
+  bool _isLoading = false;
+  final _email = TextEditingController();
+  final _password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,30 +35,40 @@ class _LoginScreenState extends State<LoginScreen> {
                 Container(
                   margin: const EdgeInsets.only(bottom: 24),
                   child: Column(
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         "Welcome",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 25,
                         ),
                       ),
-                      Text(
-                        "Masuk untuk dapat mengakses informasi dll",
-                        style: TextStyle(
-                          color: Colors.grey,
+                      Container(
+                        margin: const EdgeInsets.only(top: 8),
+                        child: const Text(
+                          "Masuk untuk dapat mengakses informasi dll",
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
                         ),
                       )
                     ],
                   ),
                 ),
-                EmailWidget((value) => _email = value.toString()),
-                PasswordWidget((value) => _password = value.toString()),
+                EmailWidget(_email),
+                PasswordWidget(_password),
                 const SizedBox(
                   height: 18,
                 ),
                 loginButton(),
-                loginRegister(),
+                registerButton(),
+                if (_isLoading)
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 16),
+                      child: const CircularProgressIndicator(),
+                    ),
+                  )
               ],
             ),
           ),
@@ -69,11 +81,11 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context) => ButtonWidget("Masuk", 0, () {
           FocusScope.of(context).unfocus();
           var isValid = _formKey.currentState!.validate();
-          checkLoginStatus(context, isValid, _email, _password);
+          checkLoginStatus(context, isValid);
         }),
       );
 
-  Widget loginRegister() => Builder(
+  Widget registerButton() => Builder(
         builder: (context) => Container(
           height: 55,
           width: double.infinity,
@@ -100,26 +112,29 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       );
 
-  void checkLoginStatus(
-      BuildContext context, bool isValid, String email, String password) {
-    if (isValid && (email == "test@gmail.com") && (password == "test")) {
-      setLoginState();
-      navigateToHomeScreen(context);
-    } else {
-      const message = "Credentials Wrong";
-      const snackBar = SnackBar(
-        content: Text(
-          message,
-          style: TextStyle(fontSize: 20),
-        ),
-        backgroundColor: Colors.red,
-      );
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  checkLoginStatus(BuildContext context, bool isValid) {
+    if (isValid) {
+      setState(() => _isLoading = true);
+      RestApiService.login(_email.text, _password.text).then((value) {
+        if (value.token!.isNotEmpty) {
+          setLoginState();
+          navigateToHomeScreen(context);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+              value.error ?? "Credentials Wrong",
+              style: const TextStyle(fontSize: 20),
+            ),
+            backgroundColor: Colors.red,
+          ));
+        }
+        setState(() => _isLoading = false);
+      });
     }
   }
 
   void navigateToHomeScreen(BuildContext context) {
-    Navigator.pushReplacementNamed(context, AppRoutes.home);
+    Navigator.popAndPushNamed(context, AppRoutes.home);
   }
 
   void navigateToRegister(BuildContext context) {

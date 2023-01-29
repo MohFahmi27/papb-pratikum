@@ -10,15 +10,14 @@ class HomeBannerWidget extends StatelessWidget {
       height: 230,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(12),
-          bottomRight: Radius.circular(12),
+          bottomLeft: Radius.circular(24),
+          bottomRight: Radius.circular(24),
         ),
         gradient: LinearGradient(
           begin: Alignment.bottomRight,
           end: Alignment.topLeft,
           colors: [
             Colors.indigo,
-            Colors.indigo.shade700,
             Colors.indigo.shade800,
           ],
         ),
@@ -70,20 +69,19 @@ class HomeBannerWidget extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.only(right: 24),
+                  padding: const EdgeInsets.only(right: 16),
                   child: const Icon(
-                    Icons.notifications_none_outlined,
+                    Icons.notification_add_outlined,
                     color: Colors.white,
                   ),
                 ),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    'assets/images/profile.jpeg',
-                    width: 45,
-                    height: 40,
+                const SizedBox(
+                  width: 45,
+                  height: 45,
+                  child: CircleAvatar(
+                    foregroundImage: AssetImage('assets/images/profile.jpeg'),
                   ),
-                )
+                ),
               ],
             )
           ],

@@ -9,8 +9,8 @@ class LogoWidget extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 28),
       child: Image.asset(
         'assets/images/logo_itk.png',
-        width: 150,
-        height: 150,
+        width: 250,
+        height: 240,
       ),
     );
   }
